@@ -1,0 +1,50 @@
+class Solution {
+    public boolean isValid(String s) {
+        char[] p = s.toCharArray();
+        
+        if(p.length == 0)
+            return true;
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(int i = 0; i < p.length; i++) {     
+             if(p[i] == ')' || p[i] == '}' ||  p[i] == ']') {
+                 if(stack.empty())
+                     return false;
+                 
+                 char ch = stack.pop(); 
+                 if(!isValid(ch, p[i]))
+                     return false;                 
+             } else {
+                 stack.push(p[i]);
+             }
+            
+            
+        }
+        
+        //System.out.println("size" + stack.size());
+        
+        if(stack.empty()) 
+            return true;
+        
+        return false;
+    }
+    
+    boolean isValid(char x, char y) {
+        if(x == '(' && y == ')') {
+            //System.out.println(x+""+y);
+            return true;
+        }
+        
+        if(x == '{' && y == '}')
+            return true;
+           
+        
+        if(x == '[' && y == ']')
+            return true;
+           
+        return false;
+           
+    }
+        
+}
