@@ -1,0 +1,72 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        if(s == null && t == null)
+            return true;
+        
+        if(s == null && t != null)
+            return false;
+        
+        if(s != null && t == null)
+            return true;
+        
+        Queue<TreeNode> nodes = new LinkedList<>();
+        nodes.add(s);
+        
+        return findNode(nodes, s, t);
+        
+    }
+    
+    
+    boolean findNode(Queue<TreeNode> nodes, TreeNode s, TreeNode t) {
+        boolean result = false;
+        while(nodes.size() != 0) {
+            TreeNode node = nodes.remove();
+            if(node.val == t.val) {
+                result = result || subtreeExist(node, t);
+            }
+            
+            if(node.left != null)
+                nodes.add(node.left);
+            
+            if(node.right != null)
+                nodes.add(node.right);
+            
+        }   
+        
+        return result; 
+    }
+    
+    boolean subtreeExist(TreeNode s, TreeNode t) {
+        if(s == null && t == null)
+            return true;
+                
+        if(s == null && t != null)
+            return false;
+        
+        if(s != null && t == null)
+            return false;
+        
+        if(s.val != t.val)
+            return false;
+     
+        
+        
+        return subtreeExist(s.left, t.left) && subtreeExist(s.right, t.right);        
+        
+    }
+}
